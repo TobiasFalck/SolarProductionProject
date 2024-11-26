@@ -1,17 +1,19 @@
 package org.example.solarproductionproject;
 
+import java.util.Date;
+
 public class SolarData {
     private int id;
-    private String date;
-    private String time;
+    private Date date;
+    private int hour;
     private int siteID;
     private int totalEnergyProduction;
     private int online;
 
-    public SolarData(int id, String date, String time, int siteID, int totalEnergyProduction, int online) {
+    public SolarData(int id, Date date, int hour, int siteID, int totalEnergyProduction, int online) {
         this.id = id;
         this.date = date;
-        this.time = time;
+        this.hour = hour;
         this.siteID = siteID;
         this.totalEnergyProduction = totalEnergyProduction;
         this.online = online;
@@ -21,12 +23,12 @@ public class SolarData {
         return id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public String getTime() {
-        return time;
+    public int getHour() {
+        return hour;
     }
 
     public int getSiteID() {
