@@ -3,12 +3,8 @@ package org.example.solarproductionproject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class SolarController {
     @FXML
