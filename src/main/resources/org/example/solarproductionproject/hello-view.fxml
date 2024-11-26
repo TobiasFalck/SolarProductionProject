@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <VBox prefHeight="364.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <ComboBox prefWidth="150.0" promptText="Month" />
+                <ComboBox prefWidth="150.0" promptText="Month" style="-fx-background-color: #f3fbfb;" />
             </children>
         </VBox>
     </left>
     <top>
-        <ToolBar prefHeight="40.0" prefWidth="383.0" BorderPane.alignment="CENTER">
+        <ToolBar prefHeight="76.0" prefWidth="770.0" style="-fx-background-color: #516364;" BorderPane.alignment="CENTER">
             <items>
+            <GridPane prefHeight="29.0" prefWidth="744.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="88.99999237060547" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.2000076293945" minWidth="10.0" prefWidth="163.79999999999998" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="194.19999999999996" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.99996948242188" minWidth="10.0" prefWidth="147.60000000000002" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.39999999999998" minWidth="10.0" prefWidth="148.39999999999998" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="123.4" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="137.00000095367432" minHeight="9.400000000000006" prefHeight="30.40000381469728" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                      <ComboBox prefWidth="194.0" promptText="Site" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                      <DatePicker prefHeight="26.0" prefWidth="193.0" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                      <ChoiceBox prefWidth="194.0" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                      <ComboBox prefHeight="26.0" prefWidth="165.0" promptText="Diagram" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label prefHeight="21.0" prefWidth="100.0" text="Label" GridPane.columnIndex="1" />
+                  <Label prefWidth="100.0" text="Label" GridPane.columnIndex="2" />
+                  <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="100.0" text="Label" GridPane.columnIndex="3" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="100.0" text="Label" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
                 <Label prefHeight="18.0" prefWidth="99.0" />
-                <ComboBox prefWidth="150.0" promptText="Site" />
-                <DatePicker />
-                <ChoiceBox prefWidth="150.0" />
-                <ComboBox prefWidth="150.0" promptText="Diagram" />
             </items>
         </ToolBar>
     </top>
     <bottom>
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </bottom>
+   <effect>
+      <InnerShadow />
+   </effect>
 </BorderPane>
