@@ -14,7 +14,7 @@ public class SolarApplication extends Application
     {
         FXMLLoader fxmlLoader = new FXMLLoader(SolarApplication.class.getResource("solar-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 300);
-        stage.setTitle("Hello!");
+        stage.setTitle("Solcelle Data");
         stage.setScene(scene);
         stage.show();
     }
