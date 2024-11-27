@@ -2,6 +2,7 @@ package org.example.solarproductionproject;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -27,7 +28,16 @@ public class SolarController
     private BarChart productionBarChart;
 
     @FXML
+    private Label productionTotal;
+
+    @FXML
     final private ChoiceBox<String> siteDDL = new ChoiceBox<>();
+
+    @FXML
+    private void createChartClick()
+    {
+        productionBarChart.setVisible(true);
+    }
 
     @FXML
     public void initialize() throws FileNotFoundException {
