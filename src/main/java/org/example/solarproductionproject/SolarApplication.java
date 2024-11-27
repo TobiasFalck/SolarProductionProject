@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application
+public class SolarApplication extends Application
 {
     @Override
     public void start(Stage stage) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SolarApplication.class.getResource("solar-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 300);
-        stage.setTitle("Hello!");
+        stage.setTitle("Solcelle Data");
         stage.setScene(scene);
         stage.show();
     }

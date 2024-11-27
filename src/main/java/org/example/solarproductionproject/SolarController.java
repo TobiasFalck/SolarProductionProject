@@ -3,7 +3,10 @@ package org.example.solarproductionproject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+public class SolarController {
     @FXML
     private Label welcomeText;
 
@@ -13,7 +16,7 @@ public class HelloController {
     }
 
     @FXML
-    public void initialize() {
-
+    public void initialize() throws FileNotFoundException {
+         ArrayList<SolarData> data = ReadData.readFileData("src/resources/solar-dataset.tsv");
     }
 }
