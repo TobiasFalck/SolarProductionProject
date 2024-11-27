@@ -41,7 +41,7 @@
                      </font></Label>
                   <ChoiceBox fx:id="siteDDL" prefHeight="26.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ChoiceBox fx:id="diagramTypeDDL" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="60.0" text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#createChartClick" prefHeight="26.0" prefWidth="60.0" text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             </items>
