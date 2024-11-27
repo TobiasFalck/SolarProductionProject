@@ -17,7 +17,6 @@ public class SolarController {
 
     @FXML
     public void initialize() throws FileNotFoundException {
-         ArrayList<SolarData> data = ReadData.readFileData("C:\\Users\\simo0\\Desktop\\solardata.tsv");
-         System.out.println(data.get(0).getDate());
+         ArrayList<SolarData> data = ReadData.readFileData("src/resources/solar-dataset.tsv");
     }
 }
