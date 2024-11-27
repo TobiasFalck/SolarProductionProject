@@ -2,6 +2,8 @@ package org.example.solarproductionproject;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -25,6 +27,12 @@ public class SolarController
     private DatePicker dateDP;
 
     @FXML
+    private LineChart<String, Double> productionLineChart;
+
+    @FXML
+    private PieChart productionPieChart;
+
+    @FXML
     private BarChart productionBarChart;
 
     @FXML
@@ -32,12 +40,6 @@ public class SolarController
 
     @FXML
     final private ChoiceBox<String> siteDDL = new ChoiceBox<>();
-
-    @FXML
-    private void createChartClick()
-    {
-        productionBarChart.setVisible(true);
-    }
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -52,4 +54,29 @@ public class SolarController
              }
          }
     }
+
+    @FXML
+    private void createChartClick()
+    {
+        productionPieChart.setVisible(false);
+        productionBarChart.setVisible(false);
+        productionTotal.setVisible(false);
+
+        String selectedChartType = diagramTypeDDL.getValue();
+        switch (selectedChartType)
+        {
+            case "Bar Chart":
+                productionBarChart.setVisible(true);
+                break;
+            case "Pie Chart":
+                productionPieChart.setVisible(true);
+                break;
+            case "Line Chart":
+                productionLineChart.setVisible(true);
+            default:
+        }
+    }
+
+
+
 }
