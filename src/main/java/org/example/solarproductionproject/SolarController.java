@@ -53,6 +53,14 @@ public class SolarController
                     siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
                 }
             }
+            if (siteDDL.getItems().isEmpty())
+            {
+                errorMessage.setText("No sites found");
+            }
+            else
+            {
+                siteDDL.getSelectionModel().selectFirst();
+            }
         }
         catch (FileNotFoundException e)
         {
