@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,15 +18,9 @@ import java.util.ResourceBundle;
 
 public class SolarController
 {
-    static ArrayList<SolarData> data;
+    private ArrayList<SolarData> data;
 
-    static {
-        try {
-            data = ReadData.readFileData("src/resources/solar-dataset.tsv");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     @FXML
     private Label errorMessage;
@@ -45,25 +40,40 @@ public class SolarController
     @FXML
     private BarChart<String, Integer> productionBarChart;
 
+
     @FXML
-    public void initialize() {
-        for (SolarData solarData : data)
+    public void initialize()
+    {
+        try
         {
-            // finds all siteIDs that are not currently added to siteDDL
-            if (!siteDDL.getItems().contains(String.valueOf(solarData.getSiteID())))
+            data = ReadData.readFileData("src/resources/solar-dataset.tsv");
+
+            for (SolarData solarData : data)
             {
-                // convert int to String, since choicebox only takes Strings
-                siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
+                // finds all siteIDs that are not currently added to siteDDL
+                if (!siteDDL.getItems().contains(String.valueOf(solarData.getSiteID())))
+                {
+                    // convert int to String, since choicebox only takes Strings
+                    siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
+                }
             }
+        }
+        catch (FileNotFoundException e)
+        {
+            errorMessage.setText("File not found");
+        }
+        catch (Exception e)
+        {
+            errorMessage.setText(e.getMessage());
         }
     }
 
     public void createChartClick()
     {
-        ArrayList<Integer> totalWhs = new ArrayList<>();
+        ArrayList<Integer> totalsWhs = new ArrayList<>();
         ArrayList<Integer> times = new ArrayList<>();
 
-        errorMessage.setText(""); // hide error message Label
+        errorMessage.setText(""); // hide error message
 
         LocalDate datePicked = dateDP.getValue();
         int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choicebox and convert it to int
@@ -74,23 +84,24 @@ public class SolarController
             // check if date and site picked(based on siteID) correspond to what is in the dataset
             if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
             {
-                totalWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
+                totalsWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
                 times.add(data.get(i).getTime());
             }
         }
 
-        if (totalWhs.isEmpty())
+        if (totalsWhs.isEmpty())
         {
             errorMessage.setText("No data for\nchosen date");
         }
         else
         {
-           createDayChart(siteIDPicked, datePicked, totalWhs, times);
+           createDayChart(siteIDPicked, datePicked, totalsWhs, times);
         }
 
     }
 
-    public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times) {
+    public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
+    {
         XYChart.Series<String, Integer> series = new XYChart.Series();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
 
@@ -100,7 +111,7 @@ public class SolarController
             System.out.println(totalWhs.get(i));
         }
 
-        // replace data in barchart instead of adding more
+        // replace data in barchart instead of replacing it
         productionBarChart.setData(FXCollections.observableArrayList(series));
     }
 
