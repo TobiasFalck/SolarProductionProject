@@ -100,7 +100,14 @@ public class SolarController
 
     }
 
-    public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
+    /**
+     * Creates and fill data into a barchart to be shown
+     * @param siteIDPicked id for the chosen site
+     * @param datePicked chosen date from datepicker
+     * @param totalWhs ArrayList of Watt hours found from data with given siteID
+     * @param times What time of day from the chosen date
+     */
+    private void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
