@@ -12,7 +12,7 @@
             <items>
             <GridPane prefHeight="66.0" prefWidth="750.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="90.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="90.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="180.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="180.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="249.19999999999993" minWidth="10.0" prefWidth="180.0" />
@@ -46,6 +46,7 @@
                      </font>
                   </Label>
                   <ChoiceBox fx:id="monthDDL" prefWidth="140.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             </items>
