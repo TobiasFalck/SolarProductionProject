@@ -28,8 +28,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="dayButton" mnemonicParsing="false" onAction="#showDayChart" prefHeight="30.0" prefWidth="55.0" text="Day" />
-                  <Button fx:id="monthButton" mnemonicParsing="false" onAction="#showMonthChart" prefHeight="30.0" prefWidth="55.0" text="Month" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#showDayChart" prefHeight="30.0" prefWidth="55.0" text="Day" />
+                  <Button mnemonicParsing="false" onAction="#showMonthChart" prefHeight="30.0" prefWidth="55.0" text="Month" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <Label text="Total Production of kWh">
