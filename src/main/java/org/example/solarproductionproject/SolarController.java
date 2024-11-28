@@ -4,17 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class SolarController
 {
@@ -29,18 +25,16 @@ public class SolarController
     private ChoiceBox<String> siteDDL; // DDL: Drop Down List
 
     @FXML
-    private DatePicker dateDP;
+    private DatePicker dateDP; // DP: Date Picker
 
     @FXML
     private ChoiceBox<String> diagramTypeDDL;
 
     @FXML
-    private Button searchButton;
-
-    @FXML
     private BarChart<String, Integer> productionBarChart;
 
 
+    // Initializes and reads the data file
     @FXML
     public void initialize()
     {
@@ -68,6 +62,7 @@ public class SolarController
         }
     }
 
+    // The on action for the button
     public void createChartClick()
     {
         ArrayList<Integer> totalsWhs = new ArrayList<>();
@@ -78,10 +73,10 @@ public class SolarController
         LocalDate datePicked = dateDP.getValue();
         int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choicebox and convert it to int
 
-        // run through every index in ArrayList data
+        // runs through every index in ArrayList data
         for (int i = 0; i < data.size(); i++)
         {
-            // check if date and site picked(based on siteID) correspond to what is in the dataset
+            // check if date and site picked (based on siteID) corresponding to what is in the dataset
             if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
             {
                 totalsWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
@@ -100,6 +95,13 @@ public class SolarController
 
     }
 
+    /**
+     * Adds the given data into a bar chart
+     * @param siteIDPicked
+     * @param datePicked
+     * @param totalWhs
+     * @param times
+     */
     public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
@@ -114,5 +116,4 @@ public class SolarController
         // replace data in barchart instead of replacing it
         productionBarChart.setData(FXCollections.observableArrayList(series));
     }
-
 }
