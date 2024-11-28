@@ -95,12 +95,12 @@ public class SolarController
         }
         else
         {
-           createDayChart(siteIDPicked, datePicked, totalsWhs, times);
+           createChart(siteIDPicked, datePicked, totalsWhs, times);
         }
 
     }
 
-    public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
+    public void createChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
@@ -113,6 +113,7 @@ public class SolarController
 
         // replace data in barchart instead of replacing it
         productionBarChart.setData(FXCollections.observableArrayList(series));
+        productionBarChart.setVisible(true);
     }
 
 }
