@@ -10,17 +10,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class SolarController
 {
+    final private String filePath = "src/resources/solar-dataset.tsv";
     private ArrayList<SolarData> data;
-
-
 
     @FXML
     private Label errorMessage;
@@ -46,7 +42,7 @@ public class SolarController
     {
         try
         {
-            data = ReadData.readFileData("src/resources/solar-dataset.tsv");
+            data = ReadData.readFileData(filePath);
 
             for (SolarData solarData : data)
             {
