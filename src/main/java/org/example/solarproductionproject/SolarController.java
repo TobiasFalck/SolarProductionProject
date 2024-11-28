@@ -45,7 +45,6 @@ public class SolarController
     @FXML
     private BarChart<String, Integer> productionBarChart;
 
-
     @FXML
     public void initialize() {
         for (SolarData solarData : data)
@@ -61,10 +60,10 @@ public class SolarController
 
     public void createChartClick()
     {
-        ArrayList<Integer> totals = new ArrayList<>();
+        ArrayList<Integer> totalWhs = new ArrayList<>();
         ArrayList<Integer> times = new ArrayList<>();
 
-        errorMessage.setText(""); // hide error message
+        errorMessage.setText(""); // hide error message Label
 
         LocalDate datePicked = dateDP.getValue();
         int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choicebox and convert it to int
@@ -75,18 +74,18 @@ public class SolarController
             // check if date and site picked(based on siteID) correspond to what is in the dataset
             if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
             {
-                totals.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
+                totalWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
                 times.add(data.get(i).getTime());
             }
         }
 
-        if (totals.isEmpty())
+        if (totalWhs.isEmpty())
         {
             errorMessage.setText("No data for\nchosen date");
         }
         else
         {
-           createDayChart(siteIDPicked, datePicked, totals, times);
+           createDayChart(siteIDPicked, datePicked, totalWhs, times);
         }
 
     }
@@ -101,7 +100,7 @@ public class SolarController
             System.out.println(totalWhs.get(i));
         }
 
-        // replace data in barchart instead of replacing it
+        // replace data in barchart instead of adding more
         productionBarChart.setData(FXCollections.observableArrayList(series));
     }
 
