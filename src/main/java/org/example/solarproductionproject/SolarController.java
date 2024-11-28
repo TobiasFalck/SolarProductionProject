@@ -10,17 +10,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class SolarController
 {
+    final private String filePath = "src/resources/solar-dataset.tsv";
     private ArrayList<SolarData> data;
-
-
 
     @FXML
     private Label errorMessage;
@@ -46,7 +42,7 @@ public class SolarController
     {
         try
         {
-            data = ReadData.readFileData("src/resources/solar-dataset.tsv");
+            data = ReadData.readFileData(filePath);
 
             for (SolarData solarData : data)
             {
@@ -56,6 +52,14 @@ public class SolarController
                     // convert int to String, since choicebox only takes Strings
                     siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
                 }
+            }
+            if (siteDDL.getItems().isEmpty())
+            {
+                errorMessage.setText("No sites found");
+            }
+            else
+            {
+                siteDDL.getSelectionModel().selectFirst();
             }
         }
         catch (FileNotFoundException e)
@@ -95,12 +99,19 @@ public class SolarController
         }
         else
         {
-           createChart(siteIDPicked, datePicked, totalsWhs, times);
+           createDayChart(siteIDPicked, datePicked, totalsWhs, times);
         }
 
     }
 
-    public void createChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
+    /**
+     * Creates and fill data into a barchart to be shown
+     * @param siteIDPicked id for the chosen site
+     * @param datePicked chosen date from datepicker
+     * @param totalWhs ArrayList of Watt hours found from data with given siteID
+     * @param times What time of day from the chosen date
+     */
+    private void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
@@ -113,7 +124,6 @@ public class SolarController
 
         // replace data in barchart instead of replacing it
         productionBarChart.setData(FXCollections.observableArrayList(series));
-        productionBarChart.setVisible(true);
     }
 
 }
