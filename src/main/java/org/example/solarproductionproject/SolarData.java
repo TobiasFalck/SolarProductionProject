@@ -8,15 +8,15 @@ public class SolarData {
     private int time;
     private int siteID;
     private int totalEnergyProduction;
-    private int online;
+    private int wattPerHour;
 
-    public SolarData(int id, LocalDate date, int time, int siteID, int totalEnergyProduction, int online) {
+    public SolarData(int id, LocalDate date, int time, int siteID, int totalEnergyProduction, int wattPerHour) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.siteID = siteID;
         this.totalEnergyProduction = totalEnergyProduction;
-        this.online = online;
+        this.wattPerHour = wattPerHour;
     }
 
     public int getId() {
@@ -39,7 +39,7 @@ public class SolarData {
         return totalEnergyProduction;
     }
 
-    public int getOnline() {
-        return online;
+    public int getWattPerHour() {
+        return wattPerHour;
     }
 }
