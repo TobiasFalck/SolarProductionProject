@@ -85,8 +85,6 @@ public class SolarController
             errorMessage.setText("No data for\nchosen date");
         }
 
-        System.out.println(totals.size());
-
         // create bar chart
         XYChart.Series<String, Integer> series = new XYChart.Series();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
@@ -102,5 +100,7 @@ public class SolarController
             productionBarChart.setData(FXCollections.observableArrayList(series));
         }
     }
+
+
 
 }
