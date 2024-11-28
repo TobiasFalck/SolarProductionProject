@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
    <effect>
       <InnerShadow />
    </effect>
@@ -19,6 +19,12 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="70.0" prefWidth="769.0" style="-fx-border-color: BLACK;" BorderPane.alignment="CENTER">
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </HBox>
             <Label text="Total Production of kWh">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />

@@ -34,7 +34,10 @@ public class SolarController
     private Button searchButton;
 
     @FXML
-    private BarChart<String, Integer> productionBarChart;
+    private BarChart<String, Integer> dayBarChart;
+
+    @FXML
+    private BarChart<String, Integer> monthBarChart;
 
 
     @FXML
@@ -74,7 +77,8 @@ public class SolarController
 
     public void createChartClick()
     {
-        ArrayList<Integer> totalsWhs = new ArrayList<>();
+        ArrayList<Integer> whsPerHours = new ArrayList<>();
+        ArrayList<Integer> whsPerDays = new ArrayList<>();
         ArrayList<Integer> times = new ArrayList<>();
 
         errorMessage.setText(""); // hide error message
@@ -88,18 +92,19 @@ public class SolarController
             // check if date and site picked(based on siteID) correspond to what is in the dataset
             if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
             {
-                totalsWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
+                whsPerHours.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
                 times.add(data.get(i).getTime());
             }
         }
 
-        if (totalsWhs.isEmpty())
+        if (whsPerHours.isEmpty())
         {
             errorMessage.setText("No data for\nchosen date");
         }
         else
         {
-           createDayChart(siteIDPicked, datePicked, totalsWhs, times);
+           createDayChart(siteIDPicked, datePicked, whsPerHours, times);
+           createMonthChart(siteIDPicked, datePicked, whsPerDays);
         }
 
     }
@@ -123,7 +128,22 @@ public class SolarController
         }
 
         // replace data in barchart instead of replacing it
-        productionBarChart.setData(FXCollections.observableArrayList(series));
+        dayBarChart.setData(FXCollections.observableArrayList(series));
+    }
+
+    private void createMonthChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> whsPerDays)
+    {
+        XYChart.Series<String, Integer> series = new XYChart.Series();
+        series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
+
+        for (int i = 0; i < whsPerDays.size(); i++)
+        {
+            series.getData().add(new XYChart.Data(times.get(i) + ":00", totalWhs.get(i)));
+            System.out.println(totalWhs.get(i));
+        }
+
+        // replace data in barchart instead of replacing it
+        monthBarChart.setData(FXCollections.observableArrayList(series));
     }
 
 }
