@@ -7,8 +7,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ReadData {
-
+public class ReadData
+{
+    /**
+     * Reads a file located at a given path to create SolarData objects
+     * witch are then returned as a list
+     * @param filepath Path to the file to read
+     * @return ArrayList of SolarData to be used in program
+     * @throws FileNotFoundException if the given path does not exists
+     */
     public static ArrayList<SolarData> readFileData(String filepath) throws FileNotFoundException
     {
         int id = 0;
