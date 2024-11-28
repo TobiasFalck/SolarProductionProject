@@ -2,7 +2,8 @@ package org.example.solarproductionproject;
 
 import java.time.LocalDate;
 
-public class SolarData {
+public class SolarData
+{
     private int id;
     private LocalDate date;
     private int time;
@@ -10,7 +11,8 @@ public class SolarData {
     private int totalEnergyProduction;
     private int wattPerHour;
 
-    public SolarData(int id, LocalDate date, int time, int siteID, int totalEnergyProduction, int wattPerHour) {
+    public SolarData(int id, LocalDate date, int time, int siteID, int totalEnergyProduction, int wattPerHour)
+    {
         this.id = id;
         this.date = date;
         this.time = time;
