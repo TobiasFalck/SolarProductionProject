@@ -127,3 +127,5 @@ public class SolarController
     }
 
 }
+
+total-month-calculation-feature
