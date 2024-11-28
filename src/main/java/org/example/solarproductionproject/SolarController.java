@@ -2,9 +2,6 @@ package org.example.solarproductionproject;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -27,16 +24,7 @@ public class SolarController
     private DatePicker dateDP;
 
     @FXML
-    private LineChart<String, Double> productionLineChart;
-
-    @FXML
-    private PieChart productionPieChart;
-
-    @FXML
     private BarChart productionBarChart;
-
-    @FXML
-    private Label productionTotal;
 
     @FXML
     final private ChoiceBox<String> siteDDL = new ChoiceBox<>();
@@ -53,10 +41,5 @@ public class SolarController
                  siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
              }
          }
-    }
-
-    @FXML
-    private void createChartClick()
-    {
     }
 }
