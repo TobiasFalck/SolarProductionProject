@@ -58,25 +58,5 @@ public class SolarController
     @FXML
     private void createChartClick()
     {
-        productionPieChart.setVisible(false);
-        productionBarChart.setVisible(false);
-        productionTotal.setVisible(false);
-
-        String selectedChartType = diagramTypeDDL.getValue();
-        switch (selectedChartType)
-        {
-            case "Bar Chart":
-                productionBarChart.setVisible(true);
-                break;
-            case "Pie Chart":
-                productionPieChart.setVisible(true);
-                break;
-            case "Line Chart":
-                productionLineChart.setVisible(true);
-            default:
-        }
     }
-
-
-
 }
