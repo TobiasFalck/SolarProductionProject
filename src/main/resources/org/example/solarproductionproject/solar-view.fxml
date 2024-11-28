@@ -17,8 +17,21 @@
       <Pane prefHeight="263.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="70.0" prefWidth="769.0" style="-fx-border-color: BLACK;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="78.0" prefWidth="767.0" style="-fx-border-color: BLACK;" BorderPane.alignment="CENTER">
          <children>
+            <GridPane prefHeight="24.0" prefWidth="766.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="378.0" minWidth="10.0" prefWidth="145.2" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="621.2" minWidth="10.0" prefWidth="621.2" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="dayButton" mnemonicParsing="false" onAction="#showDayChart" prefHeight="30.0" prefWidth="55.0" text="Day" />
+                  <Button fx:id="monthButton" mnemonicParsing="false" onAction="#showMonthChart" prefHeight="30.0" prefWidth="55.0" text="Month" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
             <Label text="Total Production of kWh">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
@@ -43,15 +56,23 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <LineChart fx:id="productionLineChart">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <PieChart fx:id="productionPieChart" />
          </children>
       </StackPane>
    </center>
    <top>
-      <GridPane alignment="CENTER" prefHeight="75.0" prefWidth="769.0" style="-fx-background-color: #516364; -fx-border-color: BLACK;" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" prefHeight="66.0" prefWidth="767.0" style="-fx-background-color: #516364; -fx-border-color: BLACK;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="80.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="160.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="180.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="249.19999999999993" minWidth="10.0" prefWidth="180.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="249.19999999999993" minWidth="10.0" prefWidth="160.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="168.8" minWidth="10.0" prefWidth="80.0" />
@@ -61,31 +82,25 @@
           <RowConstraints maxHeight="137.00000095367432" minHeight="9.400000000000006" prefHeight="30.40000381469728" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-                <DatePicker fx:id="dateDP" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <DatePicker fx:id="dateDP" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #f3fbfb;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label alignment="CENTER" prefHeight="22.0" prefWidth="166.0" text="Sites" GridPane.columnIndex="1">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="196.0" text="Dates" GridPane.columnIndex="3">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="196.0" text="Dates" GridPane.columnIndex="2">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="142.0" text="Diagram Types" GridPane.columnIndex="4">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="142.0" text="Chart Types" GridPane.columnIndex="3">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="siteDDL" prefHeight="26.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="diagramTypeDDL" prefHeight="26.0" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#createChartClick" prefHeight="26.0" prefWidth="60.0" text="Search" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <Label text="Months" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Comic Sans MS" size="14.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="monthDDL" prefWidth="140.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="siteDDL" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="diagramTypeDDL" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#createChartClick" prefHeight="26.0" prefWidth="60.0" text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             <Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
