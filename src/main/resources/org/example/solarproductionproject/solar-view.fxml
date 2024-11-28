@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
     <top>
         <ToolBar prefHeight="76.0" prefWidth="300.0" style="-fx-background-color: #516364; -fx-border-color: BLACK;" BorderPane.alignment="CENTER">
             <items>
@@ -39,13 +39,18 @@
                      </font></Label>
                   <ChoiceBox fx:id="siteDDL" prefHeight="26.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ChoiceBox fx:id="diagramTypeDDL" prefHeight="26.0" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#createChartClick" prefHeight="26.0" prefWidth="60.0" text="Search" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#createChartClick" prefHeight="26.0" prefWidth="60.0" text="Search" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Label text="Months" GridPane.columnIndex="2">
                      <font>
                         <Font name="Comic Sans MS" size="14.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="monthDDL" prefWidth="140.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="errorMessage" textFill="RED" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
             </items>
