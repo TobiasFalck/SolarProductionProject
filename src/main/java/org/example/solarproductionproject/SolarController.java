@@ -18,7 +18,6 @@ public class SolarController {
     private ArrayList<SolarData> data;
 
     //region
-    private int totalWattForMonth = 0; // To store the produced Watt
     @FXML
     private Label errorMessage; // Label to show error message when choosing invalid choice
     @FXML
