@@ -15,10 +15,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The program is to show and calculate solar production in the community of Aarhus.
+ * This program can create charts for both months and daily production of watt per hour
+ * and calculate it into Kilo Watt per Hour
+ */
+
 public class SolarController {
     private ArrayList<SolarData> data;
 
-    //region
+    //region - Variables for scene builder controls
     @FXML
     private Label errorMessage; // Label to show error message when choosing invalid choice
     @FXML
@@ -69,14 +75,12 @@ public class SolarController {
         ArrayList<Integer> times = new ArrayList<>();
         HashMap<Integer, Integer> dailyTotals = new HashMap<>();
 
-        diagramTypeDDL.setText("Bar Chart");
+        diagramTypeDDL.setText("Bar Chart"); // Sets "default" for the text field
         errorMessage.setText(""); // hide error message
         productionTotal.setText(""); // Resets the production total label
 
         LocalDate datePicked = dateDP.getValue();
         int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choice box and convert it to int
-
-        //totalWattForMonth = 0; - Initial try at storing month data
 
         for (SolarData solarData : data) {
             // Check for the selected site and date match
@@ -94,7 +98,7 @@ public class SolarController {
                     dailyTotals.put(day, dailyTotals.getOrDefault(day, 0) + solarData.getWattPerHour());
                 }
             }
-
+            // Calculations for monthly production
             double totalProductionMonth = 0;
             for (int dayTotal : dailyTotals.values()) {
                 totalProductionMonth += dayTotal;
@@ -149,7 +153,7 @@ public class SolarController {
         productionLineChart.setData(FXCollections.observableArrayList(series));
     }
 
-    // Button action to show day chart
+    // Button to show the day chart
     public void showDayChart()
     {
         diagramTypeDDL.setText("Bar Chart");
@@ -157,7 +161,7 @@ public class SolarController {
         productionLineChart.setVisible(false);
     }
 
-    // Button action to show month chart
+    // Button to show the month chart
     public void showMonthChart()
     {
         diagramTypeDDL.setText("Line Chart");
