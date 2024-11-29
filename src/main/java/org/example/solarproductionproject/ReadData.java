@@ -14,7 +14,7 @@ public class ReadData
      * witch are then returned as a list
      * @param filepath Path to the file to read
      * @return ArrayList of SolarData to be used in program
-     * @throws FileNotFoundException if the given path does not exists
+     * @throws FileNotFoundException if the given path does not exist
      */
     public static ArrayList<SolarData> readFileData(String filepath) throws FileNotFoundException
     {
@@ -23,7 +23,7 @@ public class ReadData
         String time = "";
         int siteID = 0;
         int totalEnergyProduction = 0;
-        int online = 0;
+        int wattPerHour = 0;
 
         DateTimeFormatter formatting = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // set formatting for date
         ArrayList<SolarData> dataset = new ArrayList<SolarData>();
@@ -33,6 +33,7 @@ public class ReadData
 
         in.nextLine(); // skip first line (tsv table header)
 
+        // go through each word with scanner
         while (in.hasNext())
         {
             // read data from tsv file
@@ -41,7 +42,7 @@ public class ReadData
             time = in.next();
             siteID = in.nextInt();
             totalEnergyProduction = in.nextInt();
-            online = in.nextInt();
+            wattPerHour = in.nextInt();
 
             in.nextLine();
 
@@ -50,7 +51,7 @@ public class ReadData
             int timeConverted = Integer.parseInt(time.substring(0, 2));
 
             // add SolarData objects with arguments to arraylist
-            dataset.add(new SolarData(id, dateConverted, timeConverted, siteID, totalEnergyProduction, online));
+            dataset.add(new SolarData(id, dateConverted, timeConverted, siteID, totalEnergyProduction, wattPerHour));
         }
         return dataset;
     }

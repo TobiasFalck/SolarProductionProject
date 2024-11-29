@@ -11,10 +11,13 @@ import javafx.scene.control.Label;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class SolarController
 {
+    DateTimeFormatter formatting = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // set formatting for date
+
     final private String filePath = "src/resources/solar-dataset.tsv";
     private ArrayList<SolarData> data;
 
@@ -31,13 +34,16 @@ public class SolarController
     private ChoiceBox<String> diagramTypeDDL;
 
     @FXML
-    private Button searchButton;
+    private Button dayButton;
 
     @FXML
-    private BarChart<String, Integer> dayBarChart;
+    private Button monthButton;
 
     @FXML
-    private BarChart<String, Integer> monthBarChart;
+    private BarChart<String, Integer> barChartDay;
+
+    @FXML
+    private BarChart<String, Integer> barChartMonth;
 
 
     @FXML
@@ -77,73 +83,110 @@ public class SolarController
 
     public void createChartClick()
     {
-        ArrayList<Integer> whsPerHours = new ArrayList<>();
-        ArrayList<Integer> whsPerDays = new ArrayList<>();
-        ArrayList<Integer> times = new ArrayList<>();
+        // specific date
+        ArrayList<Integer> whsHoursPerDay = new ArrayList<>();
+        ArrayList<Integer> hours = new ArrayList<>();
 
-        errorMessage.setText(""); // hide error message
+        ArrayList<Integer> whsDaysPerMonth = new ArrayList<>();
+        ArrayList<Integer> days = new ArrayList<>();
+
+        int dayCounter = 1;
+        int whsProducedInDay = 0;
 
         LocalDate datePicked = dateDP.getValue();
         int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choicebox and convert it to int
 
-        // run through every index in ArrayList data
-        for (int i = 0; i < data.size(); i++)
+        for (SolarData solarData : data)
         {
             // check if date and site picked(based on siteID) correspond to what is in the dataset
-            if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
-            {
-                whsPerHours.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
-                times.add(data.get(i).getTime());
+            if (siteIDPicked == solarData.getSiteID() && datePicked.equals(solarData.getDate())) {
+                whsHoursPerDay.add(solarData.getWattPerHour()); // add hourly watt-hours to ArrayList whsHoursPerDay
+                hours.add(solarData.getTime());
+                System.out.println(solarData.getWattPerHour());
             }
+
+            // month
+            if (siteIDPicked == solarData.getSiteID() && datePicked.getMonthValue() == solarData.getMonth() && datePicked.getYear() == solarData.getYear()) {
+                if (dayCounter == solarData.getDay()) {
+                    whsProducedInDay += solarData.getWattPerHour();
+                } else {
+                    whsDaysPerMonth.add(whsProducedInDay);
+                    whsProducedInDay = 1; // reset
+                    days.add(dayCounter);
+                    dayCounter++;
+                }
+
+            }
+
         }
 
-        if (whsPerHours.isEmpty())
+
+        errorMessage.setText(""); // hide error message
+
+
+        if (whsHoursPerDay.isEmpty())
         {
             errorMessage.setText("No data for\nchosen date");
         }
         else
         {
-           createDayChart(siteIDPicked, datePicked, whsPerHours, times);
-           createMonthChart(siteIDPicked, datePicked, whsPerDays);
+           createDayChart(siteIDPicked, datePicked, whsHoursPerDay, hours);
+           createMonthChart(siteIDPicked, datePicked, whsDaysPerMonth, days);
+           barChartDay.setVisible(true);
+
+           dayButton.setVisible(true);
+           monthButton.setVisible(true);
         }
 
     }
 
-    /**
-     * Creates and fill data into a barchart to be shown
-     * @param siteIDPicked id for the chosen site
-     * @param datePicked chosen date from datepicker
-     * @param totalWhs ArrayList of Watt hours found from data with given siteID
-     * @param times What time of day from the chosen date
-     */
-    private void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
+
+        /**
+         * Create and fill data into a barchart to be shown
+         * @param siteIDPicked id for the chosen site
+         * @param datePicked chosen date from datepicker
+         * @param whsHoursPerDay ArrayList of Watt hours found from data with given siteID
+         * @param times What time of day from the chosen date
+         */
+    private void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> whsHoursPerDay, ArrayList<Integer> times)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
-        series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
+        series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.format(formatting));
 
-        for (int i = 0; i < totalWhs.size(); i++)
+        for (int i = 0; i < whsHoursPerDay.size(); i++)
         {
-            series.getData().add(new XYChart.Data(times.get(i) + ":00", totalWhs.get(i)));
-            System.out.println(totalWhs.get(i));
+            series.getData().add(new XYChart.Data(times.get(i) + ":00", whsHoursPerDay.get(i)));
         }
 
         // replace data in barchart instead of replacing it
-        dayBarChart.setData(FXCollections.observableArrayList(series));
+        barChartDay.setData(FXCollections.observableArrayList(series));
+        barChartDay.setTitle(datePicked.format(formatting) + " (unit: watt-hours)");
     }
 
-    private void createMonthChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> whsPerDays)
+
+    private void createMonthChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> whsDaysPerMonth, ArrayList<Integer> days)
     {
         XYChart.Series<String, Integer> series = new XYChart.Series();
-        series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
+        series.setName("Site ID: " + siteIDPicked + "\nMonth: " + datePicked.getMonth());
 
-        for (int i = 0; i < whsPerDays.size(); i++)
+        for (int i = 0; i < whsDaysPerMonth.size(); i++)
         {
-            series.getData().add(new XYChart.Data(times.get(i) + ":00", totalWhs.get(i)));
-            System.out.println(totalWhs.get(i));
+            series.getData().add(new XYChart.Data(days.get(i).toString(), whsDaysPerMonth.get(i)));
         }
 
         // replace data in barchart instead of replacing it
-        monthBarChart.setData(FXCollections.observableArrayList(series));
+        barChartMonth.setData(FXCollections.observableArrayList(series));
+        barChartMonth.setTitle(datePicked.getMonth() + " " + datePicked.getYear() + " (unit: watt-hours)");
+    }
+
+    public void showBarChartDay() {
+        barChartMonth.setVisible(false);
+        barChartDay.setVisible(true);
+    }
+
+    public void showBarChartMonth() {
+        barChartDay.setVisible(false);
+        barChartMonth.setVisible(true);
     }
 
 }
