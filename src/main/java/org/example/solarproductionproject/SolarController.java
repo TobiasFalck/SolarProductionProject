@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class SolarController {
     @FXML
     private DatePicker dateDP; // DP: Date Picker
     @FXML
-    private ChoiceBox<String> diagramTypeDDL; // Shows which chart type is showing
+    private TextField diagramTypeDDL; // Shows which chart type is showing
     @FXML
     private BarChart<String, Integer> productionBarChart; // Day chart
     @FXML
@@ -55,10 +56,6 @@ public class SolarController {
             productionBarChart.setVisible(false);
             productionLineChart.setVisible(false);
 
-            // Set default selection for diagramTypeDDL
-            diagramTypeDDL.getItems().addAll("Bar Chart", "Line Chart");
-            diagramTypeDDL.setValue("Bar Chart"); // Default to Bar Chart
-
         } catch (FileNotFoundException e) {
             errorMessage.setText("File not found");
         } catch (Exception e) {
@@ -72,6 +69,7 @@ public class SolarController {
         ArrayList<Integer> times = new ArrayList<>();
         HashMap<Integer, Integer> dailyTotals = new HashMap<>();
 
+        diagramTypeDDL.setText("Bar Chart");
         errorMessage.setText(""); // hide error message
         productionTotal.setText(""); // Resets the production total label
 
@@ -114,7 +112,7 @@ public class SolarController {
         }
 
         // Show only the selected chart type
-        switch (diagramTypeDDL.getValue()) {
+        switch (diagramTypeDDL.getText()) {
             case "Bar Chart": // Shows day graph
                 productionBarChart.setVisible(true);
                 productionLineChart.setVisible(false);
@@ -154,7 +152,7 @@ public class SolarController {
     // Button action to show day chart
     public void showDayChart()
     {
-        diagramTypeDDL.setValue("Bar Chart");
+        diagramTypeDDL.setText("Bar Chart");
         productionBarChart.setVisible(true);
         productionLineChart.setVisible(false);
     }
@@ -162,7 +160,7 @@ public class SolarController {
     // Button action to show month chart
     public void showMonthChart()
     {
-        diagramTypeDDL.setValue("Line Chart");
+        diagramTypeDDL.setText("Line Chart");
         productionBarChart.setVisible(false);
         productionLineChart.setVisible(true);
     }
