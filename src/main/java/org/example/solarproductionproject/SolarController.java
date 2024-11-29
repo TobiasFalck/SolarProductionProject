@@ -94,11 +94,14 @@ public class SolarController {
                     int day = solarData.getDate().getDayOfMonth();
                     dailyTotals.put(day, dailyTotals.getOrDefault(day, 0) + solarData.getWattPerHour());
                 }
-
-                for  (dayTotal) {
-
-                }
             }
+
+            double totalProductionMonth = 0;
+            for  (int dayTotal : dailyTotals.values()) {
+                totalProductionMonth += dayTotal;
+            }
+
+            productionTotal.setText(String.valueOf(totalProductionMonth / 1000) + " kWh"); // convert to String
         }
 
         // Generate charts if data is available
