@@ -89,9 +89,13 @@ public class SolarController {
                 }
 
                 // Add to month chart data
-                if (datePicked.getMonth() == solarData.getDate().getMonth()) {
+                if (datePicked.getMonth() == solarData.getDate().getMonth())
+                {
                     int day = solarData.getDate().getDayOfMonth();
                     dailyTotals.put(day, dailyTotals.getOrDefault(day, 0) + solarData.getWattPerHour());
+                }
+
+                for  (dayTotal) {
 
                 }
             }
@@ -158,4 +162,5 @@ public class SolarController {
         productionBarChart.setVisible(false);
         productionLineChart.setVisible(true);
     }
+
 }
