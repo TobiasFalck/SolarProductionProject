@@ -49,6 +49,8 @@ public class SolarController {
                 }
             }
 
+            siteDDL.setValue(String.valueOf(data.get(0).getSiteID()));
+
             // Ensure both charts start hidden
             productionBarChart.setVisible(false);
             productionLineChart.setVisible(false);
@@ -88,7 +90,7 @@ public class SolarController {
                 }
 
                 // Add to month chart data
-                if (datePicked.getMonth() == solarData.getDate().getMonth())
+                if (datePicked.getMonth() == solarData.getDate().getMonth() && datePicked.getYear() == solarData.getDate().getYear())
                 {
                     int day = solarData.getDate().getDayOfMonth();
                     dailyTotals.put(day, dailyTotals.getOrDefault(day, 0) + solarData.getWattPerHour());
@@ -96,7 +98,7 @@ public class SolarController {
             }
 
             double totalProductionMonth = 0;
-            for  (int dayTotal : dailyTotals.values()) {
+            for (int dayTotal : dailyTotals.values()) {
                 totalProductionMonth += dayTotal;
             }
 
@@ -140,7 +142,7 @@ public class SolarController {
     // Create the month chart
     public void createMonthChart(int siteIDPicked, LocalDate datePicked, HashMap<Integer, Integer> dailyTotals) {
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
-        series.setName("Site ID: " + siteIDPicked + "\nMonth: " + datePicked.getMonth());
+        series.setName("Site ID: " + siteIDPicked + "\nMonth: " + datePicked.getMonth() + " " + datePicked.getYear());
 
         for (int day : dailyTotals.keySet()) {
             series.getData().add(new XYChart.Data<>("Day " + day, dailyTotals.get(day)));

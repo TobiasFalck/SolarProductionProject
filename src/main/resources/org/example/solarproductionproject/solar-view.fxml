@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="769.0" style="-fx-background-color: #90b0b1; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.solarproductionproject.SolarController">
    <effect>
       <InnerShadow />
    </effect>
@@ -19,10 +19,11 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="78.0" prefWidth="767.0" style="-fx-border-color: BLACK;" BorderPane.alignment="CENTER">
          <children>
-            <GridPane prefHeight="24.0" prefWidth="766.0">
+            <GridPane prefHeight="24.0" prefWidth="224.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="378.0" minWidth="10.0" prefWidth="145.2" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="621.2" minWidth="10.0" prefWidth="621.2" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="621.2" minWidth="10.0" prefWidth="621.2" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
