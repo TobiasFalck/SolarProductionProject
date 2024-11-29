@@ -13,7 +13,7 @@ public class SolarApplication extends Application
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(SolarApplication.class.getResource("solar-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 960, 650);
         stage.setTitle("Solar Production Program");
         stage.setScene(scene);
         stage.show();

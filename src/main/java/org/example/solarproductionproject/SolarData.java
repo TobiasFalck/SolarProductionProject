@@ -25,6 +25,7 @@ public class SolarData
         this.siteID = siteID;
         this.totalEnergyProduction = totalEnergyProduction;
         this.wattPerHour = wattPerHour;
+
     }
 
     public int getId() {
