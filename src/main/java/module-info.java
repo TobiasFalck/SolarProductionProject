@@ -10,6 +10,7 @@ module org.example.solarproductionproject {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens org.example.solarproductionproject to javafx.fxml;
     exports org.example.solarproductionproject;

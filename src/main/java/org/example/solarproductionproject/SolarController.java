@@ -3,8 +3,8 @@ package org.example.solarproductionproject;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -12,118 +12,150 @@ import javafx.scene.control.Label;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class SolarController
-{
-    final private String filePath = "src/resources/solar-dataset.tsv";
+public class SolarController {
     private ArrayList<SolarData> data;
 
+    //region
+    private int totalWattForMonth = 0; // To store the produced Watt
     @FXML
-    private Label errorMessage;
-
+    private Label errorMessage; // Label to show error message when choosing invalid choice
     @FXML
     private ChoiceBox<String> siteDDL; // DDL: Drop Down List
-
     @FXML
-    private DatePicker dateDP;
-
+    private DatePicker dateDP; // DP: Date Picker
     @FXML
-    private ChoiceBox<String> diagramTypeDDL;
-
+    private ChoiceBox<String> diagramTypeDDL; // Shows which chart type is showing
     @FXML
-    private Button searchButton;
-
+    private BarChart<String, Integer> productionBarChart; // Day chart
     @FXML
-    private BarChart<String, Integer> productionBarChart;
-
-
+    private LineChart<String, Integer> productionLineChart; // Month chart
     @FXML
-    public void initialize()
-    {
-        try
-        {
-            data = ReadData.readFileData(filePath);
+    private Label productionTotal; // Label to calculate kWh
+    //endregion
 
-            for (SolarData solarData : data)
-            {
+
+    // Initializes and reads the data file
+    @FXML
+    public void initialize() {
+        try {
+            data = ReadData.readFileData("src/resources/solar-dataset.tsv");
+
+            for (SolarData solarData : data) {
                 // finds all siteIDs that are not currently added to siteDDL
-                if (!siteDDL.getItems().contains(String.valueOf(solarData.getSiteID())))
-                {
+                if (!siteDDL.getItems().contains(String.valueOf(solarData.getSiteID()))) {
                     // convert int to String, since choicebox only takes Strings
                     siteDDL.getItems().add(String.valueOf(solarData.getSiteID()));
                 }
             }
-            if (siteDDL.getItems().isEmpty())
-            {
-                errorMessage.setText("No sites found");
-            }
-            else
-            {
-                siteDDL.getSelectionModel().selectFirst();
-            }
-        }
-        catch (FileNotFoundException e)
-        {
+
+            // Ensure both charts start hidden
+            productionBarChart.setVisible(false);
+            productionLineChart.setVisible(false);
+
+            // Set default selection for diagramTypeDDL
+            diagramTypeDDL.getItems().addAll("Bar Chart", "Line Chart");
+            diagramTypeDDL.setValue("Bar Chart"); // Default to Bar Chart
+
+        } catch (FileNotFoundException e) {
             errorMessage.setText("File not found");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             errorMessage.setText(e.getMessage());
         }
     }
 
-    public void createChartClick()
-    {
+    // The on action for the search button
+    public void createChartClick() {
         ArrayList<Integer> totalsWhs = new ArrayList<>();
         ArrayList<Integer> times = new ArrayList<>();
+        HashMap<Integer, Integer> dailyTotals = new HashMap<>();
 
         errorMessage.setText(""); // hide error message
+        productionTotal.setText(""); // Resets the production total label
 
         LocalDate datePicked = dateDP.getValue();
-        int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choicebox and convert it to int
+        int siteIDPicked = Integer.parseInt(siteDDL.getValue()); // get siteID from sites choice box and convert it to int
 
-        // run through every index in ArrayList data
-        for (int i = 0; i < data.size(); i++)
-        {
-            // check if date and site picked(based on siteID) correspond to what is in the dataset
-            if (siteIDPicked == data.get(i).getSiteID() && datePicked.equals(data.get(i).getDate()))
-            {
-                totalsWhs.add(data.get(i).getWattPerHour()); // add hourly total kWh to ArrayList totals
-                times.add(data.get(i).getTime());
+        //totalWattForMonth = 0; - Initial try at storing month data
+
+        for (SolarData solarData : data) {
+            // Check for the selected site and date match
+            if (siteIDPicked == solarData.getSiteID()) {
+                // Add to day chart data
+                if (datePicked.equals(solarData.getDate())) {
+                    totalsWhs.add(solarData.getWattPerHour());
+                    times.add(solarData.getTime());
+                }
+
+                // Add to month chart data
+                if (datePicked.getMonth() == solarData.getDate().getMonth()) {
+                    int day = solarData.getDate().getDayOfMonth();
+                    dailyTotals.put(day, dailyTotals.getOrDefault(day, 0) + solarData.getWattPerHour());
+
+                }
             }
         }
 
-        if (totalsWhs.isEmpty())
-        {
-            errorMessage.setText("No data for\nchosen date");
-        }
-        else
-        {
-           createDayChart(siteIDPicked, datePicked, totalsWhs, times);
+        // Generate charts if data is available
+        if (totalsWhs.isEmpty() && dailyTotals.isEmpty()) {
+            errorMessage.setText("No data for chosen date or month.");
+        } else {
+            createDayChart(siteIDPicked, datePicked, totalsWhs, times);
+            createMonthChart(siteIDPicked, datePicked, dailyTotals);
         }
 
+        // Show only the selected chart type
+        switch (diagramTypeDDL.getValue()) {
+            case "Bar Chart": // Shows day graph
+                productionBarChart.setVisible(true);
+                productionLineChart.setVisible(false);
+                break;
+            case "Line Chart": // Shows month graph
+                productionBarChart.setVisible(false);
+                productionLineChart.setVisible(true);
+                break;
+            default:
+        }
     }
 
-    /**
-     * Creates and fill data into a barchart to be shown
-     * @param siteIDPicked id for the chosen site
-     * @param datePicked chosen date from datepicker
-     * @param totalWhs ArrayList of Watt hours found from data with given siteID
-     * @param times What time of day from the chosen date
-     */
-    private void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times)
-    {
-        XYChart.Series<String, Integer> series = new XYChart.Series();
+    // Create the day chart
+    public void createDayChart(int siteIDPicked, LocalDate datePicked, ArrayList<Integer> totalWhs, ArrayList<Integer> times) {
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
         series.setName("Site ID: " + siteIDPicked + "\nDate: " + datePicked.toString());
 
-        for (int i = 0; i < totalWhs.size(); i++)
-        {
-            series.getData().add(new XYChart.Data(times.get(i) + ":00", totalWhs.get(i)));
-            System.out.println(totalWhs.get(i));
+        for (int i = 0; i < totalWhs.size(); i++) {
+            series.getData().add(new XYChart.Data<>(times.get(i) + ":00", totalWhs.get(i)));
         }
 
-        // replace data in barchart instead of replacing it
         productionBarChart.setData(FXCollections.observableArrayList(series));
     }
 
+    // Create the month chart
+    public void createMonthChart(int siteIDPicked, LocalDate datePicked, HashMap<Integer, Integer> dailyTotals) {
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName("Site ID: " + siteIDPicked + "\nMonth: " + datePicked.getMonth());
+
+        for (int day : dailyTotals.keySet()) {
+            series.getData().add(new XYChart.Data<>("Day " + day, dailyTotals.get(day)));
+        }
+
+        productionLineChart.setData(FXCollections.observableArrayList(series));
+    }
+
+    // Button action to show day chart
+    public void showDayChart()
+    {
+        diagramTypeDDL.setValue("Bar Chart");
+        productionBarChart.setVisible(true);
+        productionLineChart.setVisible(false);
+    }
+
+    // Button action to show month chart
+    public void showMonthChart()
+    {
+        diagramTypeDDL.setValue("Line Chart");
+        productionBarChart.setVisible(false);
+        productionLineChart.setVisible(true);
+    }
 }
